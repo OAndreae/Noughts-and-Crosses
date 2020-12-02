@@ -172,7 +172,6 @@ std::string game_status(State s, Player p)
 int main()
 try
 {
-	print_instructions();
 	Board board(Player::X);
 
 	auto current_player = player(board);
