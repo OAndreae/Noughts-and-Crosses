@@ -75,7 +75,7 @@ Pos input_position(const Board& b)
 Pos get_next_move(const Board& b)
 {
 	if (player(b) == b.first_player())
-		return minimax_position(b);
+		return random_position(b);
 	else
 		return input_position(b);
 }
@@ -120,6 +120,7 @@ void print(const std::vector<Pos>& actions)
 		std::cout << letter << position.row << "\n";
 	}
 }
+
 void print(State s)
 {
 	switch (s)

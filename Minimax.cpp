@@ -2,6 +2,8 @@
 
 #include <stdexcept>
 #include <limits>
+#include <random>
+#include <chrono>
 
 bool is_terminal(State s)
 {
@@ -151,9 +153,6 @@ int min_value(Board& b)
 	return current_min;
 }
 
-
-
-
 Pos minimax_position(const Board& b)
 {
 	auto best_action = actions(b)[0];
@@ -192,4 +191,25 @@ Pos minimax_position(const Board& b)
 	// Work out which board corresponds to the 
 	// min_utility. If there are multiple boards with min_utility,
 	// then choose the first one in the list of actions
+}
+
+
+int rand_int(int min, int max)
+{
+	// Doesn't work with MinGW64
+	//std::random_device rd;
+
+	// Seed the RNG
+	std::default_random_engine gen{std::chrono::system_clock::now().time_since_epoch().count()};
+	std::uniform_int_distribution<int> dist{min, max};
+	return dist(gen);
+}
+
+Pos random_position(const Board& b)
+{
+	bool is_valid = false;
+	auto valid_moves = actions(b);
+	
+	auto i = rand_int(0, valid_moves.size()-1);
+	return valid_moves[i];	
 }
