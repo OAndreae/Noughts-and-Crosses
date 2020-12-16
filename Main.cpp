@@ -5,7 +5,7 @@
 #include <string>
 
 #include "Board.h"
-#include "Minimax.h"
+#include "Artificial_intelligence.h"
 
 void pause()
 {

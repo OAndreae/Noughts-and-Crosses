@@ -1,4 +1,4 @@
-#include "Minimax.h"
+#include "Artificial_intelligence.h"
 
 #include <stdexcept>
 #include <limits>
