@@ -1,6 +1,7 @@
 #include "Artificial_intelligence.h"
 
 #include <stdexcept>
+#include <string>
 #include <limits>
 #include <random>
 #include <chrono>
@@ -212,4 +213,31 @@ Pos random_position(const Board& b)
 	
 	auto i = rand_int(0, valid_moves.size()-1);
 	return valid_moves[i];	
+}
+
+Pos calculated_position(const Board& b, Difficulty diff)
+{
+	auto per_cent = rand_int(0, 100);
+
+	switch (diff)
+	{
+	case Difficulty::Easy:
+		return random_position(b);
+		break;
+	case Difficulty::Medium:
+		if(per_cent <= (int)Difficulty::Medium)
+			return minimax_position(b);
+		else
+			return random_position(b);
+	case Difficulty::Hard:
+		if(per_cent <= (int)Difficulty::Hard)
+			return minimax_position(b);
+		else
+			return random_position(b);
+	case Difficulty::Impossible:
+		return minimax_position(b);
+	default:
+		throw std::invalid_argument("Pos calculated_position(const Board& b, Difficulty diff): Unsupported difficulty");
+		break;
+	}	
 }

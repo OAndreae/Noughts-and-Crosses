@@ -72,10 +72,10 @@ Pos input_position(const Board& b)
 	}
 }
 
-Pos get_next_move(const Board& b)
+Pos get_next_move(const Board& b, Difficulty diff = Difficulty::Impossible)
 {
 	if (player(b) == b.first_player())
-		return random_position(b);
+		return calculated_position(b, diff);
 	else
 		return input_position(b);
 }
@@ -170,10 +170,42 @@ std::string game_status(State s, Player p)
 	return oss.str();
 }
 
+Difficulty input_difficulty()
+{
+	std::cout << "\nPlease select your difficulty level (1, 2, 3, or 4).\n"
+				"1. Easy\n"
+				"2. Medium\n"
+				"3. Hard\n"
+				"4. Impossible\n";
+
+	while(true)
+	{
+		std::cout << '>';
+		std::string input;
+		std::getline(std::cin, input);
+		switch (input.at(0))
+		{
+		case '1':
+			return Difficulty::Easy;
+		case '2':
+			return Difficulty::Medium;
+		case '3':
+			return Difficulty::Hard;
+		case '4':
+			return Difficulty::Impossible;
+		default:
+			std::cout << input << "is invalid. Please try again.\n";
+			break;
+		}
+	}
+
+}
+
 int main()
 try
 {
 	print_instructions();
+	auto diff = input_difficulty();
 	Board board(Player::X);
 
 	auto current_player = player(board);
@@ -184,7 +216,7 @@ try
 		
 		current_player = player(board);
 		
-		auto pos = get_next_move(board);
+		auto pos = get_next_move(board, diff);
 		
 		board = result(board, pos);
 		
