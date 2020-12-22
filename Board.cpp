@@ -88,8 +88,8 @@ bool is_full(const Board& b)
 std::vector<Pos> actions(const Board& b)
 {
 	std::vector<Pos> empty_spaces;
-	for (size_t i = 0; i < b.rows(); i++)
-		for (size_t j = 0; j < b.columns(); j++)
+	for (unsigned int i = 0; i < b.rows(); i++)
+		for (unsigned int j = 0; j < b.columns(); j++)
 			if (b.at(i, j) == Counter::None)
 				empty_spaces.push_back(Pos{ i,j });
 
