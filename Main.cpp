@@ -9,7 +9,7 @@
 
 void pause()
 {
-	std::cout << "Please enter any character to continue\n";
+	std::cout << "\nPlease enter any character to continue\n";
 	char c;
 	std::cin.get(c);
 }
@@ -225,6 +225,7 @@ try
 
 	std::cout << board;
 	std::cout << game_status(state, current_player);
+	pause();
 	return 0;
 }
 catch (const std::exception& e)
