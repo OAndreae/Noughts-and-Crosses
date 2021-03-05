@@ -19,7 +19,7 @@ void print_instructions()
 	std::cout << "Welcome to Noughts and Crosses\n"
 		"\nWINNING CONDITIONS\n"
 		"- Place three of your counters ('O' or 'X') in a line\n"
-		"- This can be either in a line, column or diagonal\n"
+		"- The line can be horizontal, vertical, or diagonal\n"
 		"\nHOW TO PLAY\n"
 		"- You will be prompted to place your piece '>'\n"
 		"- Enter the coordinates of the cell in which you would like to place it\n"
