@@ -26,10 +26,10 @@ int utility(State s)
 	switch (s)
 	{
 	case State::Win:
-		return 10;
+		return 1;
 		break;
 	case State::Loss:
-		return -10;
+		return -1;
 		break;
 	case State::Draw:
 		return 0;
@@ -109,7 +109,7 @@ int min_value(Board& b);
 /// <summary>
 /// Determines the maximum value that could be obtained from the boards that result from placing MIN's counter on all of the blank spaces
 /// </summary>
-/// <param name="b"></param>
+/// <param name="b">board</param>
 /// <returns></returns>
 int max_value(Board& b)
 {
@@ -156,6 +156,11 @@ int min_value(Board& b)
 
 Pos minimax_position(const Board& b)
 {
+
+	// The minimax algorithm (AI player) always takes the role of MAX
+	// so it wants to obtain the highest score (utility) possible.
+
+	// The action that will (eventually) give the highest utility
 	auto best_action = actions(b)[0];
 	auto current_max = std::numeric_limits<int>::min();
 
@@ -165,7 +170,9 @@ Pos minimax_position(const Board& b)
 
 		// v is the smallest utility of the boards
 		// that result from performing the given action
+
 		Board board = b;
+		// Consider the possible utility for the current action
 		board.set(action, counter);
 		auto v = min_value(board);
 		if (v > current_max)
@@ -173,6 +180,7 @@ Pos minimax_position(const Board& b)
 			best_action = action;
 			current_max = v;
 		}
+		// Remove the counter placed on the board
 		board.set(action, Counter::None);
 	}
 
