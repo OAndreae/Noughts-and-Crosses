@@ -194,7 +194,7 @@ Difficulty input_difficulty()
 		case '4':
 			return Difficulty::Impossible;
 		default:
-			std::cout << input << "is invalid. Please try again.\n";
+			std::cout << input << " is invalid. Please try again.\n";
 			break;
 		}
 	}
