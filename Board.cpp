@@ -85,6 +85,8 @@ bool is_full(const Board& b)
 	return true;
 }
 
+// Returns the blank positions on board b.
+// These are the 'actions' that can be performed.
 std::vector<Pos> actions(const Board& b)
 {
 	std::vector<Pos> empty_spaces;
