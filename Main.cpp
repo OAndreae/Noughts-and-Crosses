@@ -4,19 +4,21 @@
 #include <sstream>
 #include <string>
 
+using namespace std;
+
 #include "Board.h"
 #include "Artificial_intelligence.h"
 
 void pause()
 {
-	std::cout << "\nPlease enter any character to continue\n";
+	cout << "\nPlease enter any character to continue\n";
 	char c;
-	std::cin.get(c);
+	cin.get(c);
 }
 
 void print_instructions()
 {
-	std::cout << "Welcome to Noughts and Crosses\n"
+	cout << "Welcome to Noughts and Crosses\n"
 		"\nWINNING CONDITIONS\n"
 		"- Place three of your counters ('O' or 'X') in a line\n"
 		"- The line can be horizontal, vertical, or diagonal\n"
@@ -28,42 +30,42 @@ void print_instructions()
 
 Position input_position(const Board& b)
 {
-	std::cout << "Player " << player(b) << "'s turn:\n";
+	cout << "Player " << player(b) << "'s turn:\n";
 
 	while (true)
 	{
-		std::cout << '>';
+		cout << '>';
 
-		std::string input;
-		std::getline(std::cin, input);
+		string input;
+		getline(cin, input);
 
-		std::string invalid_input_message = input + " is not a valid position. Please try again.\n";
+		string invalid_input_message = input + " is not a valid position. Please try again.\n";
 		// check if sufficient characters
 		if (input.size() != 2) {
-			std::cout << invalid_input_message;
+			cout << invalid_input_message;
 			continue;
 		}
 
 		// check if format is valid
 		auto letter = input.at(0);
 		auto num = input.at(1);
-		if (!std::isalpha(letter) || !std::isdigit(num)) {
-			std::cout << invalid_input_message;
+		if (!isalpha(letter) || !isdigit(num)) {
+			cout << invalid_input_message;
 			continue;
 		}
 
 		// check if postion is on the board
-		letter = std::toupper(letter);
+		letter = toupper(letter);
 		auto x = num - '0';
 		if (!(letter == 'A' || letter == 'B' || letter == 'C') || x < 0 || x > b.columns()-1) {
-			std::cout << invalid_input_message;
+			cout << invalid_input_message;
 			continue;
 		}
 
 		// check if position is blank
 		Position p((letter - 'A'), x);
-		if (!is_empty(b, p)) {
-			std::cout << " is already taken. Please try again.\n";
+		if (!is_blank(b, p)) {
+			cout << " is already taken. Please try again.\n";
 			continue;
 		}
 	
@@ -81,9 +83,9 @@ Position get_next_move(const Board& b, Difficulty diff = Difficulty::Impossible)
 }
 
 // Provides a status message from the perspective of player p
-std::string game_status(Outcome s, Player p)
+string game_status(Outcome s, Player p)
 {
-	std::ostringstream oss;
+	ostringstream oss;
 	switch (s)
 	{
 	case Outcome::Win:
@@ -105,7 +107,7 @@ std::string game_status(Outcome s, Player p)
 
 Difficulty input_difficulty()
 {
-	std::cout << "\nPlease select your difficulty level (1, 2, 3, or 4).\n"
+	cout << "\nPlease select your difficulty level (1, 2, 3, or 4).\n"
 				"1. Easy\n"
 				"2. Medium\n"
 				"3. Hard\n"
@@ -113,9 +115,9 @@ Difficulty input_difficulty()
 
 	while(true)
 	{
-		std::cout << '>';
-		std::string input;
-		std::getline(std::cin, input);
+		cout << '>';
+		string input;
+		getline(cin, input);
 		switch (input.at(0))
 		{
 		case '1':
@@ -127,7 +129,7 @@ Difficulty input_difficulty()
 		case '4':
 			return Difficulty::Impossible;
 		default:
-			std::cout << input << " is invalid. Please try again.\n";
+			cout << input << " is invalid. Please try again.\n";
 			break;
 		}
 	}
@@ -137,15 +139,18 @@ Difficulty input_difficulty()
 int main()
 try
 {
+	const auto first_player = Player::O;
+
 	print_instructions();
-	auto diff = input_difficulty();
+	cout << "You're player " << first_player << '\n';
+	const auto diff = input_difficulty();
 	Board board(Player::O);
 
 	auto current_player = player(board);
 	auto state = Outcome::Undecided;
 	while (state == Outcome::Undecided)
 	{
-		std::cout << board;
+		cout << board;
 		
 		current_player = player(board);
 		
@@ -156,12 +161,12 @@ try
 		state = get_outcome(board, current_player);
 	}
 
-	std::cout << board;
-	std::cout << game_status(state, current_player);
+	cout << board;
+	cout << game_status(state, current_player);
 	pause();
 	return 0;
 }
-catch (const std::exception& e)
+catch (const exception& e)
 {
-	std::cerr << "error: " << e.what() << '\n';
+	cerr << "error: " << e.what() << '\n';
 }
