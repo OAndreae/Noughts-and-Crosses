@@ -14,7 +14,7 @@ Counter Board::at(unsigned int column, unsigned int row) const
 	return m_board.at(to_index(column, row));
 }
 
-Counter Board::at(Pos p) const
+Counter Board::at(Position p) const
 {
 	return at(p.column, p.row);
 }
@@ -26,7 +26,7 @@ bool Board::set(unsigned int column, unsigned int row, Counter c)
 	return is_empty(*this, column, row);
 }
 
-bool Board::set(Pos p, Counter c)
+bool Board::set(Position p, Counter c)
 {
 	return set(p.column, p.row, c);
 }
@@ -66,7 +66,7 @@ std::ostream& operator<<(std::ostream& os, const Board& b)
 	return os << '\n';
 }
 
-bool is_empty(const Board& b, Pos p)
+bool is_empty(const Board& b, Position p)
 {
 	return is_empty(b, p.column, p.row);
 }
@@ -87,13 +87,13 @@ bool is_full(const Board& b)
 
 // Returns the blank positions on board b.
 // These are the 'actions' that can be performed.
-std::vector<Pos> actions(const Board& b)
+std::vector<Position> actions(const Board& b)
 {
-	std::vector<Pos> empty_spaces;
+	std::vector<Position> empty_spaces;
 	for (unsigned int i = 0; i < b.rows(); i++)
 		for (unsigned int j = 0; j < b.columns(); j++)
 			if (b.at(i, j) == Counter::None)
-				empty_spaces.push_back(Pos{ i,j });
+				empty_spaces.push_back(Position{ i,j });
 
 	return empty_spaces;
 }
@@ -158,7 +158,7 @@ Outcome get_outcome(const Board& b, Player p)
 
 // Returns the board that results from placing the current player's counter 
 // at position p on board b
-Board result(const Board& b, const Pos& p)
+Board result(const Board& b, const Position& p)
 {
 	Counter counter = player(b) == Player::X ? Counter::X : Counter::O;
 	Board board = b;

@@ -10,8 +10,8 @@ enum class Difficulty
     Impossible = 100
 };
 
-Pos minimax_position(const Board& b);
+Position minimax_position(const Board& b);
 
-Pos random_position(const Board& b);
+Position random_position(const Board& b);
 
-Pos calculated_position(const Board& b, Difficulty diff);
+Position calculated_position(const Board& b, Difficulty diff);

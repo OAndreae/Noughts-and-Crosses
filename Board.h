@@ -9,9 +9,9 @@ enum class Counter : char
 	O = 'O'
 };
 
-struct Pos
+struct Position
 {
-	Pos(unsigned int c, unsigned int r) : column{c}, row{r}{}
+	Position(unsigned int c, unsigned int r) : column{c}, row{r}{}
 	unsigned int column;
 	unsigned int row;
 };
@@ -34,7 +34,7 @@ public:
 	/// <param name="j">The row [0, 2]</param>
 	/// <returns>The counter in position (<paramref name="i"/>, <paramref name="j"/>)</returns>
 	Counter at(unsigned int column, unsigned int row) const;
-	Counter at(Pos p) const;
+	Counter at(Position p) const;
 	
 	/// <summary>
 	/// Places counter <paramref name="c"/> on space (<paramref name="i"/>, <paramref name="j"/>) if 
@@ -45,7 +45,7 @@ public:
 	/// <param name="c">The counter to place at (<paramref name="i"/>, <paramref name="j"/>)</param>
 	/// <returns>True if (<paramref name="i"/>, <paramref name="j"/>) was blank, otherwise false</returns>
 	bool set(unsigned int column, unsigned int row, Counter c);
-	bool set(Pos p, Counter c);
+	bool set(Position p, Counter c);
 
 	Player first_player() const { return m_first_player; }
 
@@ -81,7 +81,7 @@ private:
 std::ostream& operator<<(std::ostream& os, const Board& b);
 
 bool is_empty(const Board& b, unsigned int column, unsigned int row);
-bool is_empty(const Board& b, Pos p);
+bool is_empty(const Board& b, Position p);
 /// <summary>
 /// Determines whether the given <c>Board</c> is full of counters
 /// </summary>
@@ -100,8 +100,8 @@ bool is_full(const Board& b);
 Player player(const Board& b);
 Player opponent(Player p);
 std::ostream& operator<<(std::ostream& os, Player p);
-std::vector<Pos> actions(const Board& b);
-Board result(const Board& b, const Pos& p);
+std::vector<Position> actions(const Board& b);
+Board result(const Board& b, const Position& p);
 
 enum class Outcome
 {

@@ -26,7 +26,7 @@ void print_instructions()
 		"- e.g. B2 is the middle cell\n";
 }
 
-Pos input_position(const Board& b)
+Position input_position(const Board& b)
 {
 	std::cout << "Player " << player(b) << "'s turn:\n";
 
@@ -61,7 +61,7 @@ Pos input_position(const Board& b)
 		}
 
 		// check if position is blank
-		Pos p((letter - 'A'), x);
+		Position p((letter - 'A'), x);
 		if (!is_empty(b, p)) {
 			std::cout << " is already taken. Please try again.\n";
 			continue;
@@ -72,7 +72,7 @@ Pos input_position(const Board& b)
 	}
 }
 
-Pos get_next_move(const Board& b, Difficulty diff = Difficulty::Impossible)
+Position get_next_move(const Board& b, Difficulty diff = Difficulty::Impossible)
 {
 	if (player(b) == b.first_player())
 		return input_position(b);

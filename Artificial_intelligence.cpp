@@ -74,7 +74,7 @@ int min_value(Board& b, Player maximising_player)
 	return current_min;
 }
 
-Pos minimax_position(const Board& b)
+Position minimax_position(const Board& b)
 {
 	// The minimax algorithm (AI player) always takes the role of MAX
 	// so it wants to obtain the highest score (utility) possible.
@@ -128,7 +128,7 @@ int rand_int(int min, int max)
 	return dist(gen);
 }
 
-Pos random_position(const Board& b)
+Position random_position(const Board& b)
 {
 	bool is_valid = false;
 	auto valid_moves = actions(b);
@@ -137,7 +137,7 @@ Pos random_position(const Board& b)
 	return valid_moves[i];
 }
 
-Pos calculated_position(const Board& b, Difficulty diff)
+Position calculated_position(const Board& b, Difficulty diff)
 {
 	auto per_cent = rand_int(0, 100);
 
