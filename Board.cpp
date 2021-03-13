@@ -99,45 +99,103 @@ std::vector<Pos> actions(const Board& b)
 }
 
 
+// bool has_won(const Board& b, Player p)
+// {
+// 	auto counter = p == Player::X ? Counter::X : Counter::O;
+//
+// 	// three in a column
+// 	if (b.at(0, 0) == counter && b.at(0, 1) == counter && b.at(0, 2) == counter)
+// 		return true;
+// 	if (b.at(1, 0) == counter && b.at(1, 1) == counter && b.at(1, 2) == counter)
+// 		return true;
+// 	if (b.at(2, 0) == counter && b.at(2, 1) == counter && b.at(2, 2) == counter)
+// 		return true;
+// 	// three in a row
+// 	if (b.at(0, 0) == counter && b.at(1, 0) == counter && b.at(2, 0) == counter)
+// 		return true;
+// 	if (b.at(0, 1) == counter && b.at(1, 1) == counter && b.at(2, 1) == counter)
+// 		return true;
+// 	if (b.at(0, 2) == counter && b.at(1, 2) == counter && b.at(2, 2) == counter)
+// 		return true;
+// 	// leading diagonal
+// 	if (b.at(0, 0) == counter && b.at(1, 1) == counter && b.at(2, 2) == counter)
+// 		return true;
+// 	// opposite diagonal
+// 	if (b.at(2, 0) == counter && b.at(1, 1) == counter && b.at(0, 2) == counter)
+// 		return true;
+//
+// 	return false;
+// }
+
+// Outcome get_outcome(const Board& b, Player p)
+// {
+// 	if (is_full(b))
+// 		return Outcome::Draw;
+//
+// 	if (has_won(b, p))
+// 		return Outcome::Win;
+// 	else if (has_won(b, opponent(p))) // zero-sum game: if X wins, the O loses and vice versa
+// 		return Outcome::Loss;
+//
+// 	// Not a draw, win, or loss: must be in progress and Undecided
+// 	return Outcome::Undecided;
+// }
+
+// Determines whether player p has won the game on board b
 bool has_won(const Board& b, Player p)
 {
 	auto counter = p == Player::X ? Counter::X : Counter::O;
 
-	// three in a column
-	if (b.at(0, 0) == counter && b.at(0, 1) == counter && b.at(0, 2) == counter)
-		return true;
-	if (b.at(1, 0) == counter && b.at(1, 1) == counter && b.at(1, 2) == counter)
-		return true;
-	if (b.at(2, 0) == counter && b.at(2, 1) == counter && b.at(2, 2) == counter)
-		return true;
-	// three in a row
-	if (b.at(0, 0) == counter && b.at(1, 0) == counter && b.at(2, 0) == counter)
-		return true;
-	if (b.at(0, 1) == counter && b.at(1, 1) == counter && b.at(2, 1) == counter)
-		return true;
-	if (b.at(0, 2) == counter && b.at(1, 2) == counter && b.at(2, 2) == counter)
-		return true;
-	// leading diagonal
-	if (b.at(0, 0) == counter && b.at(1, 1) == counter && b.at(2, 2) == counter)
-		return true;
-	// opposite diagonal
-	if (b.at(2, 0) == counter && b.at(1, 1) == counter && b.at(0, 2) == counter)
-		return true;
+	// For each column, check for three adjacent counters of the same type
+	for (unsigned int c = 0; c < b.columns(); ++c) {
+		for (unsigned int r = 0; r < b.rows() - 2; ++r) {
+			// Three in column found if next two counters are of the same type
+			if (b.at(c, r) == counter && b.at(c, r + 1) == counter && b.at(c, r + 2) == counter)
+				return true;
+		}
+	}
 
+	// For each row, check for three adjacent counters of the same type
+	for (unsigned int r = 0; r < b.rows();++r) {
+		for (unsigned int c = 0; c < b.columns() - 2; ++c) {
+			// Three in a row found if next two counters are of the same type
+			if (b.at(c, r) == counter && b.at(c + 1, r) == counter && b.at(c + 2, r) == counter)
+				return true;
+		}
+	}
+
+	// Check the leading diagonals ('\')
+	for (unsigned int c = 0; c < b.columns() - 2;++c) {
+		for (unsigned int r = 0; r < b.rows() - 2;++r) {
+			if (b.at(c, r) == counter && b.at(c + 1, r + 1) == counter && b.at(c + 2, r + 2) == counter)
+				return true;
+		}
+	}
+
+	// Check the non-leading diagonals ('/')
+	for (unsigned int c = b.columns()-1; c > 1; --c) {
+		for (unsigned int r = 0; r < b.rows() - 2; ++r) {
+			if (b.at(c, r) == counter && b.at(c - 1, r + 1) == counter && b.at(c - 2, r + 2) == counter)
+				return true;
+		}
+	}
+
+	// Player p hasn't won: the game is either in progress (undecided), drawn, or lost
 	return false;
 }
 
+// Determines the outcome of board b from the perspective
+// of player p. Returns Outcome::Undecided if b isn't terminal.
 Outcome get_outcome(const Board& b, Player p)
 {
-	if (is_full(b))
-		return Outcome::Draw;
-
 	if (has_won(b, p))
 		return Outcome::Win;
-	else if (has_won(b, opponent(p))) // zero-sum game: if X wins, the O loses and vice versa
+	else if (has_won(b, opponent(p)))
 		return Outcome::Loss;
+	else if (actions(b).size() == 0)
+		return Outcome::Draw;
 
-	// Not a draw, win, or loss: must be in progress and Undecided
+	// The winning conditions were not found and the board isn't full
 	return Outcome::Undecided;
 }
 

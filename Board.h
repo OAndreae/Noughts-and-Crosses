@@ -103,8 +103,6 @@ std::ostream& operator<<(std::ostream& os, Player p);
 std::vector<Pos> actions(const Board& b);
 Board result(const Board& b, const Pos& p);
 
-bool has_won(const Board& b, Player p);
-
 enum class Outcome
 {
 	Win,
@@ -113,11 +111,7 @@ enum class Outcome
 	Undecided
 };
 
-/// <summary>
-/// Determines the state of the board from the perspective of p; assumes that only one player has won 
-/// </summary>
-/// <param name="b">The <c>Board</c></param>
-/// <param name="p">The perspective of the player</param>
-/// <returns>Draw, Win, Loss, or Undecided from the perspective of p</returns>
+// Determines the outcome of board b from the perspective
+// of player p. Returns Outcome::Undecided if b isn't terminal.
 Outcome get_outcome(const Board& b, Player p);
 

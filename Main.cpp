@@ -75,27 +75,27 @@ Pos input_position(const Board& b)
 Pos get_next_move(const Board& b, Difficulty diff = Difficulty::Impossible)
 {
 	if (player(b) == b.first_player())
-		return calculated_position(b, diff);
-	else
 		return input_position(b);
+	else
+		return calculated_position(b, diff);
 }
 
 // Provides a status message from the perspective of player p
-std::string game_status(State s, Player p)
+std::string game_status(Outcome s, Player p)
 {
 	std::ostringstream oss;
 	switch (s)
 	{
-	case State::Win:
+	case Outcome::Win:
 		oss << "Player " << p << " has won!";
 		break;
-	case State::Loss:
+	case Outcome::Loss:
 		oss << "Player " << opponent(p) << " has won!";
 		break;
-	case State::Draw:
+	case Outcome::Draw:
 		oss << "You drew!";
 		break;
-	case State::Undecided:
+	case Outcome::Undecided:
 		oss << "The game is in progress";
 		break;
 	}
@@ -139,11 +139,11 @@ try
 {
 	print_instructions();
 	auto diff = input_difficulty();
-	Board board(Player::X);
+	Board board(Player::O);
 
 	auto current_player = player(board);
-	auto state = State::Undecided;
-	while (state == State::Undecided)
+	auto state = Outcome::Undecided;
+	while (state == Outcome::Undecided)
 	{
 		std::cout << board;
 		
@@ -153,7 +153,7 @@ try
 		
 		board = result(board, pos);
 		
-		state = determine_state(board, current_player);
+		state = get_outcome(board, current_player);
 	}
 
 	std::cout << board;
