@@ -105,7 +105,7 @@ Board result(const Board& b, const Pos& p);
 
 bool has_won(const Board& b, Player p);
 
-enum class State
+enum class Outcome
 {
 	Win,
 	Loss,
@@ -119,5 +119,5 @@ enum class State
 /// <param name="b">The <c>Board</c></param>
 /// <param name="p">The perspective of the player</param>
 /// <returns>Draw, Win, Loss, or Undecided from the perspective of p</returns>
-State determine_state(const Board& b, Player p);
+Outcome get_outcome(const Board& b, Player p);
 

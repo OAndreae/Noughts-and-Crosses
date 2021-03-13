@@ -127,18 +127,18 @@ bool has_won(const Board& b, Player p)
 	return false;
 }
 
-State determine_state(const Board& b, Player p)
+Outcome get_outcome(const Board& b, Player p)
 {
 	if (is_full(b))
-		return State::Draw;
+		return Outcome::Draw;
 
 	if (has_won(b, p))
-		return State::Win;
+		return Outcome::Win;
 	else if (has_won(b, opponent(p))) // zero-sum game: if X wins, the O loses and vice versa
-		return State::Loss;
+		return Outcome::Loss;
 
 	// Not a draw, win, or loss: must be in progress and Undecided
-	return State::Undecided;
+	return Outcome::Undecided;
 }
 
 /// <summary>
