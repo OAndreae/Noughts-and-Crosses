@@ -80,12 +80,7 @@ Pos get_next_move(const Board& b, Difficulty diff = Difficulty::Impossible)
 		return input_position(b);
 }
 
-/// <summary>
-/// Provides a status message from the perspective of player p
-/// </summary>
-/// <param name="s">The state of the game</param>
-/// <param name="p">The player whose turn it is</param>
-/// <returns>A commentator's message on the game's state</returns>
+// Provides a status message from the perspective of player p
 std::string game_status(State s, Player p)
 {
 	std::ostringstream oss;
