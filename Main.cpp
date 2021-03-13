@@ -80,68 +80,6 @@ Pos get_next_move(const Board& b, Difficulty diff = Difficulty::Impossible)
 		return input_position(b);
 }
 
-//Player player(const Board& b)
-//{
-//	auto x_counters = 0;
-//	auto o_counters = 0;
-//	for (const auto& c : b)
-//	{
-//		if (c == Counter::X)
-//			x_counters++;
-//		else if (c == Counter::O)
-//			o_counters++;
-//	}
-//
-//	if (x_counters == 0 && o_counters == 0)
-//		return first_player();
-//	else if (x_counters > o_counters) // X has had more turns than O, so it's O's turn
-//		return Player::O;
-//	else
-//		return Player::X;
-//}
-
-void print(const std::vector<Pos>& actions)
-{
-	for (auto& position : actions)
-	{
-		auto letter = 'X';
-		switch (position.column)
-		{
-		case 0:
-			letter = 'A';
-		case 1:
-			letter = 'B';
-		case 2:
-			letter = 'C';
-		default:
-			letter = 'X';
-		}
-
-		std::cout << letter << position.row << "\n";
-	}
-}
-
-void print(State s)
-{
-	switch (s)
-	{
-	case State::Win:
-		std::cout << "win\n";
-		break;
-	case State::Loss:
-		std::cout << "loss\n";
-		break;
-	case State::Draw:
-		std::cout << "draw\n";
-		break;
-	case State::Undecided:
-		std::cout << "undecided\n";
-		break;
-	default:
-		break;
-	}
-}
-
 /// <summary>
 /// Provides a status message from the perspective of player p
 /// </summary>
