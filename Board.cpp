@@ -98,49 +98,6 @@ std::vector<Pos> actions(const Board& b)
 	return empty_spaces;
 }
 
-
-// bool has_won(const Board& b, Player p)
-// {
-// 	auto counter = p == Player::X ? Counter::X : Counter::O;
-//
-// 	// three in a column
-// 	if (b.at(0, 0) == counter && b.at(0, 1) == counter && b.at(0, 2) == counter)
-// 		return true;
-// 	if (b.at(1, 0) == counter && b.at(1, 1) == counter && b.at(1, 2) == counter)
-// 		return true;
-// 	if (b.at(2, 0) == counter && b.at(2, 1) == counter && b.at(2, 2) == counter)
-// 		return true;
-// 	// three in a row
-// 	if (b.at(0, 0) == counter && b.at(1, 0) == counter && b.at(2, 0) == counter)
-// 		return true;
-// 	if (b.at(0, 1) == counter && b.at(1, 1) == counter && b.at(2, 1) == counter)
-// 		return true;
-// 	if (b.at(0, 2) == counter && b.at(1, 2) == counter && b.at(2, 2) == counter)
-// 		return true;
-// 	// leading diagonal
-// 	if (b.at(0, 0) == counter && b.at(1, 1) == counter && b.at(2, 2) == counter)
-// 		return true;
-// 	// opposite diagonal
-// 	if (b.at(2, 0) == counter && b.at(1, 1) == counter && b.at(0, 2) == counter)
-// 		return true;
-//
-// 	return false;
-// }
-
-// Outcome get_outcome(const Board& b, Player p)
-// {
-// 	if (is_full(b))
-// 		return Outcome::Draw;
-//
-// 	if (has_won(b, p))
-// 		return Outcome::Win;
-// 	else if (has_won(b, opponent(p))) // zero-sum game: if X wins, the O loses and vice versa
-// 		return Outcome::Loss;
-//
-// 	// Not a draw, win, or loss: must be in progress and Undecided
-// 	return Outcome::Undecided;
-// }
-
 // Determines whether player p has won the game on board b
 bool has_won(const Board& b, Player p)
 {
@@ -199,14 +156,8 @@ Outcome get_outcome(const Board& b, Player p)
 	return Outcome::Undecided;
 }
 
-/// <summary>
-/// Defines the board that results from placing the current player's counter 
-/// at position p on board b
-/// </summary>
-/// <param name="b">The board on which to place the counter</param>
-/// <param name="p">The position to place the counter</param>
-/// <returns>The board that results from placing the current player's counter at 
-/// position p on board b</returns>
+// Returns the board that results from placing the current player's counter 
+// at position p on board b
 Board result(const Board& b, const Pos& p)
 {
 	Counter counter = player(b) == Player::X ? Counter::X : Counter::O;
@@ -215,11 +166,7 @@ Board result(const Board& b, const Pos& p)
 	return board;
 }
 
-/// <summary>
-/// Identifies the player whose turn it is in board b
-/// </summary>
-/// <param name="b">A Board</param>
-/// <returns>The player whose turn it is in board b</returns>
+// Identifies the player whose turn it is in board b
 Player player(const Board& b)
 {
 	auto counters_played = 0;
@@ -235,22 +182,13 @@ Player player(const Board& b)
 		return second_player;
 }
 
-/// <summary>
-/// Determines the opponent (e.g. if p is O, X is opponent)
-/// </summary>
-/// <param name="p">The current player</param>
-/// <returns>The opposing player</returns>
+// Determines the opponent (e.g. if p is O, X is opponent)
 Player opponent(Player p)
 {
 	return p == Player::X ? Player::O : Player::X;
 }
 
-/// <summary>
-/// Outputs player p as 'X' or 'O'
-/// </summary>
-/// <param name="os">The output stream</param>
-/// <param name="p">The player to output</param>
-/// <returns></returns>
+// Outputs player p as 'X' or 'O'
 std::ostream& operator<<(std::ostream& os, Player p)
 {
 	if (p == Player::X)

@@ -6,8 +6,6 @@
 #include <random>
 #include <chrono>
 
-
-
 int utility(const Board& b, Player maximising_player)
 {
 	switch (get_outcome(b, maximising_player)) {
@@ -31,118 +29,12 @@ bool is_terminal(const Board& b)
 	return get_outcome(b, Player::X) != Outcome::Undecided;
 }
 
-// bool is_terminal(Outcome s)
-// {
-// 	switch (s) {
-// 	case Outcome::Draw:
-// 	case Outcome::Win:
-// 	case Outcome::Loss:
-// 		return true;
-// 	default:
-// 		return false;
-// 	}
-// }
-
-/// <summary>
-/// Determines the utility of state s, which MUST be a terminal state
-/// </summary>
-/// <param name="s">A terminal state</param>
-/// <returns>The utility of s</returns>
-// int utility(Outcome s)
-// {
-// 	switch (s) {
-// 	case Outcome::Win:
-// 		return 1;
-// 		break;
-// 	case Outcome::Loss:
-// 		return -1;
-// 		break;
-// 	case Outcome::Draw:
-// 		return 0;
-// 		break;
-// 	case Outcome::Undecided:
-// 	default:
-// 		throw std::invalid_argument("b must be in a terminal state (win, loss, or draw)");
-// 		break;
-// 	}
-// }
-
-//int utility(const Board& b, Player first_player)
-//{
-//	auto state = determine_state(b, first_player);
-//	switch (state)
-//	{
-//	case State::Win:
-//		return 10;
-//		break;
-//	case State::Loss:
-//		return -10;
-//		break;
-//	case State::Draw:
-//		return 0;
-//		break;
-//	case State::Undecided: default:
-//		throw std::invalid_argument("b must be in a terminal state (win, loss, or draw)");
-//		break;
-//	}
-//}
-
-//int min_value(const Board& b);
-//
-///// <summary>
-///// Determines the maximum value that could be obtained from the boards that result from placing MIN's counter on all of the blank spaces
-///// </summary>
-///// <param name="b"></param>
-///// <returns></returns>
-//int max_value(const Board& b)
-//{
-//	auto s = determine_state(b, b.first_player());
-//	if(is_terminal(s))
-//		return utility(s);
-//
-//	auto current_max = std::numeric_limits<int>::lowest();
-//	// For each blank space, choose the maximum from the highest utility seen so far
-//	// and the highest utility that could result from MIN's moves
-//	for (const auto& action : actions(b))
-//		current_max = std::max(current_max, min_value(result(b, action)));
-//
-//	return current_max;
-//}
-//
-//int min_value(const Board& b)
-//{
-//	auto s = determine_state(b, b.first_player());
-//	if (is_terminal(s))
-//		return utility(s);
-//
-//	auto current_min = std::numeric_limits<int>::max();
-//
-//	// Choose the smallest utility of the boards that result from MAX
-//	// playing the next turn
-//	//
-//	// For each blank space, choose the minimum from the current lowest
-//	// value and the maximum value that MAX could obtain by taking
-//	// each action (i.e. placing his counter on the blank spaces)
-//
-//	for (const auto& action : actions(b))
-//		current_min = std::min(current_min, max_value(result(b, action)));
-//
-//	return current_min;
-//}
-
 int min_value(Board& b, Player maximising_player);
 
-/// <summary>
-/// Determines the maximum value that could be obtained from the boards that result from placing MIN's counter on all of the blank spaces
-/// </summary>
-/// <param name="b">board</param>
-/// <returns></returns>
+// Determines the maximum value that could be obtained from the boards
+// that result from placing MIN's counter on all of the blank spaces
 int max_value(Board& b, Player maximising_player)
 {
-	// auto s = get_outcome(b, opponent(b.first_player()));
-	// if (is_terminal(s))
-	// 	return utility(s);
-
 	if (is_terminal(b))
 		return utility(b, maximising_player);
 
@@ -161,10 +53,6 @@ int max_value(Board& b, Player maximising_player)
 
 int min_value(Board& b, Player maximising_player)
 {
-	// auto s = get_outcome(b, opponent(b.first_player()));
-	// if (is_terminal(s))
-	// 	return utility(s);
-
 	if (is_terminal(b))
 		return utility(b, maximising_player);
 
