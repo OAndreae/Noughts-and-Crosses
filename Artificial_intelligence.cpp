@@ -6,6 +6,7 @@
 #include <random>
 #include <chrono>
 
+// Determines the score of the terminal state b
 int utility(const Board& b, Player maximising_player)
 {
 	switch (get_outcome(b, maximising_player)) {
@@ -21,6 +22,7 @@ int utility(const Board& b, Player maximising_player)
 	}
 }
 
+// Returns true if b is in a win, loss, or draw state
 bool is_terminal(const Board& b)
 {
 	// The state is terminal if there is a win, a loss, or
@@ -74,6 +76,9 @@ int min_value(Board& b, Player maximising_player)
 	return current_min;
 }
 
+// Calculates the optimal position on which to place a
+// counter. Optimal players either win or draw; they don't 
+// lose.
 Position minimax_position(const Board& b)
 {
 	// The minimax algorithm (AI player) always takes the role of MAX
@@ -83,14 +88,15 @@ Position minimax_position(const Board& b)
 	auto best_action = actions(b)[0];
 	auto current_max = std::numeric_limits<int>::min();
 
+	// Determine the action with the highest utility
 	for (const auto& action : actions(b)) {
 		Counter counter = player(b) == Player::X ? Counter::X : Counter::O;
 
-		// v is the smallest utility of the boards
-		// that result from performing the given action
-
+		// Copy so that b can remain const
 		Board board = b;
-		// Consider the possible utility for the current action
+
+		// Perform the action and update the best action if
+		// it has a better (higher) utility
 		board.set(action, counter);
 		auto v = min_value(board, player(b));
 		if (v > current_max) {
@@ -102,19 +108,6 @@ Position minimax_position(const Board& b)
 	}
 
 	return best_action;
-
-	// Return the action that
-
-	// Minimax_player is always the maximising player,
-	// so choose the board with the greatest value that could
-	// result from one of MIN's moves
-
-	// Determine the smallest value
-	//auto min_utility = min_value(b);
-
-	// Work out which board corresponds to the
-	// min_utility. If there are multiple boards with min_utility,
-	// then choose the first one in the list of actions
 }
 
 int rand_int(int min, int max)
@@ -123,20 +116,24 @@ int rand_int(int min, int max)
 	//std::random_device rd;
 
 	// Seed the RNG
-	std::default_random_engine gen{ std::chrono::system_clock::now().time_since_epoch().count() };
+	long seed = std::chrono::system_clock::now().time_since_epoch().count();
+	std::default_random_engine gen{ seed };
 	std::uniform_int_distribution<int> dist{ min, max };
 	return dist(gen);
 }
 
+// Returns a random position from the blank spaces
+// on board b
 Position random_position(const Board& b)
 {
-	bool is_valid = false;
 	auto valid_moves = actions(b);
 
 	auto i = rand_int(0, valid_moves.size() - 1);
 	return valid_moves[i];
 }
 
+// Higher difficulties increase the probability of an optimal (minimax) position
+// being returned. Non-optimal moves are random.
 Position calculated_position(const Board& b, Difficulty diff)
 {
 	auto per_cent = rand_int(0, 100);
