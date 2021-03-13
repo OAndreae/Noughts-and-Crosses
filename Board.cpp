@@ -23,7 +23,7 @@ bool Board::set(unsigned int column, unsigned int row, Counter c)
 {
 	m_board[to_index(column, row)] = c;
 
-	return is_empty(*this, column, row);
+	return is_blank(*this, column, row);
 }
 
 bool Board::set(Position p, Counter c)
@@ -66,12 +66,12 @@ std::ostream& operator<<(std::ostream& os, const Board& b)
 	return os << '\n';
 }
 
-bool is_empty(const Board& b, Position p)
+bool is_blank(const Board& b, Position p)
 {
-	return is_empty(b, p.column, p.row);
+	return is_blank(b, p.column, p.row);
 }
 
-bool is_empty(const Board& b, unsigned int column, unsigned int row)
+bool is_blank(const Board& b, unsigned int column, unsigned int row)
 {
 	return b.at(column, row) == Counter::None;
 }

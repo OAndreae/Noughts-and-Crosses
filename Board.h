@@ -80,8 +80,8 @@ private:
 
 std::ostream& operator<<(std::ostream& os, const Board& b);
 
-bool is_empty(const Board& b, unsigned int column, unsigned int row);
-bool is_empty(const Board& b, Position p);
+bool is_blank(const Board& b, unsigned int column, unsigned int row);
+bool is_blank(const Board& b, Position p);
 /// <summary>
 /// Determines whether the given <c>Board</c> is full of counters
 /// </summary>
