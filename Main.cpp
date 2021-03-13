@@ -23,7 +23,7 @@ void print_instructions()
 		"\nHOW TO PLAY\n"
 		"- You will be prompted to place your piece '>'\n"
 		"- Enter the coordinates of the cell in which you would like to place it\n"
-		"- e.g. B2 is the middle cell\n";
+		"- e.g. B1 is the middle cell\n";
 }
 
 Position input_position(const Board& b)
