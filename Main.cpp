@@ -20,7 +20,7 @@ void print_instructions()
 {
 	cout << "Welcome to Noughts and Crosses\n"
 		"\nWINNING CONDITIONS\n"
-		"- Place three of your counters ('O' or 'X') in a line\n"
+		"- Place three of your counters in a line\n"
 		"- The line can be horizontal, vertical, or diagonal\n"
 		"\nHOW TO PLAY\n"
 		"- You will be prompted to place your piece '>'\n"
@@ -30,7 +30,7 @@ void print_instructions()
 
 Position input_position(const Board& b)
 {
-	cout << "Player " << player(b) << "'s turn:\n";
+	cout << "Your turn:\n";
 
 	while (true)
 	{
@@ -107,7 +107,7 @@ string game_status(Outcome s, Player p)
 
 Difficulty input_difficulty()
 {
-	cout << "\nPlease select your difficulty level (1, 2, 3, or 4).\n"
+	cout << "\nPlease select a level of difficulty (1, 2, 3, or 4).\n"
 				"1. Easy\n"
 				"2. Medium\n"
 				"3. Hard\n"
@@ -142,7 +142,7 @@ try
 	const auto first_player = Player::O;
 
 	print_instructions();
-	cout << "You're player " << first_player << '\n';
+	cout << "\nYou're player " << first_player << ".\n";
 	const auto diff = input_difficulty();
 	Board board(Player::O);
 
